@@ -89,6 +89,13 @@ blockquote cite{display:block;font-style:normal;font-size:11px;letter-spacing:.3
 .from{margin:80px 0 0;font-size:13px;letter-spacing:.3em;color:rgba(236,232,226,.45)}
 #service .svc{margin-top:40px}
 #service .svc h3{font-size:clamp(18px,1.7vw,23px)}
+.lg h4{font-weight:300;font-size:clamp(18px,1.8vw,24px);letter-spacing:.16em;margin:0 0 26px;color:#ece8e2}
+.lg{max-width:46em}.lg>li{padding-bottom:84px}
+.lg dd{font-size:clamp(14px,1.2vw,16px)}
+.lg dd.tbd{color:rgba(236,232,226,.28);font-style:italic}
+#log h2{font-size:clamp(32px,5.4vw,74px)}
+.lg dl{grid-template-columns:6.5em 1fr}
+#service .xp h3{font-size:clamp(22px,2.4vw,32px)}#service h2,#contact h2{font-size:clamp(26px,4vw,54px)}
 footer{position:relative;z-index:2;padding:0 12vw 6vh;font-size:11px;letter-spacing:.35em;color:rgba(236,232,226,.3);display:none}
 footer a{color:inherit;text-decoration:none}
 .seed{width:9px;height:9px;border-radius:50%;background:#e2a46c;box-shadow:0 0 16px 5px rgba(214,148,90,.35);margin-bottom:40px;animation:br 3.6s ease-in-out infinite}
@@ -134,10 +141,13 @@ const CONTACT_EMAIL='praxiswalker@outlook.com';
 const CONTACT_WECHAT='wrjy2049';
 // ===== 记录：往数组里追加即可，最新放最前 =====
 const LOGS=[
- {date:'2026.10',curious:'学了 AI，怎么用它出海？',did:'把出海前辈哥飞的公开文章蒸馏成一个 Agent，开源到 GitHub，在 X 上发了出来。',result:'涨了一些关注，但没赚到钱；推文和回复是 AI 写的，我自己判断不了，做到后来不知道自己在做什么。',now:'动手很快不是难事，难的是停下来问一句：我要的是什么。注意力要先守住，再花出去。'},
+ {date:'2026.10',title:'用 Jev 给口号打分',curious:'一句话好不好记，能交给 AI 判断吗？',did:'把四句候选口号交给决策模型 Jev，让它选最容易被记住、也最能复述原意的一句。',reach:'几百毫秒给出选择和概率，选中「带着好奇去做，做了，才知道什么重要。」（57%）。',stuck:'它的把握不高（0.43），也不是真人测试。',now:'判断可以先交给 AI，但改变结果的决定还得我来做。'},
+ {date:'2026.10',title:'智讯分选 · 第一届黑河学院 AI 应用创新大赛',curious:'AI 的幻觉，能不能压到接近零？',did:'围绕决策模型 Jev 搭了一个科研资讯情报助手的决策框架。',reach:'把判断拆成一个个明确的小问题后，它能稳定地给出答案。',stuck:'',now:''},
+ {date:'2026.10',title:'把哥飞蒸馏成 Agent',curious:'学了 AI，怎么用它出海？',did:'把出海前辈哥飞的公开文章蒸馏成一个 Agent，开源到 GitHub，在 X 上发了出来。',reach:'把一位前辈的公开文章蒸馏成能用的 Agent，还替我写推文、回评论。',stuck:'它写的东西我自己判断不了，做到后来不知道自己在做什么；涨了关注，没赚到钱。',now:'动手很快不是难事，难的是停下来问一句：我要的是什么。注意力要先守住，再花出去。'},
 ];
 (()=>{const ol=document.getElementById('lg');const e=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-ol.innerHTML=LOGS.map(l=>`<li class="rv"><time>${e(l.date)}</time><dl><dt>好奇</dt><dd>${e(l.curious)}</dd><dt>做了</dt><dd>${e(l.did)}</dd><dt>结果</dt><dd>${e(l.result)}</dd><dt>现在觉得</dt><dd class="now">${e(l.now)}</dd></dl></li>`).join('');})();
+const F=[['curious','好奇'],['did','做了'],['reach','AI 做到了'],['stuck','卡在了'],['now','现在觉得']];
+ol.innerHTML=LOGS.map(l=>`<li class="rv"><time>${e(l.date)}</time>${l.title?`<h4>${e(l.title)}</h4>`:''}<dl>${F.map(([k,n])=>`<dt>${n}</dt><dd class="${k==='now'?'now':''}${l[k]?'':' tbd'}">${l[k]?e(l[k]):'待我补充'}</dd>`).join('')}</dl></li>`).join('');})();
 
 function weiranAudio(ac,out,S){ // S = start time in ctx seconds; returns master gain
 const sr=ac.sampleRate;
