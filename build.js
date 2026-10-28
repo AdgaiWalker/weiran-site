@@ -6,7 +6,7 @@ const F=[['curious','好奇'],['did','做了'],['reach','AI 做到了'],['stuck'
 const li=LOGS.map(l=>`<li class="rv"><time>${e(l.date)}</time>${l.title?`<h4>${e(l.title)}</h4>`:''}<dl>${F.map(([k,n])=>`<dt>${n}</dt><dd class="${k==='now'?'now':''}${l[k]?'':' tbd'}">${l[k]?e(l[k]):'待我补充'}${k==='did'&&l.link?` <a class="gl" href="${e(l.link)}" target="_blank" rel="noopener">GitHub →</a>`:''}</dd>`).join('')}</dl></li>`).join('');
 const html=src.replace('<!--LOGS-->',li);
 const site='https://goodloop.si';
-const llms=`# 未然界域科技工作室\n\n> 带着好奇去做，做了，才知道什么重要。探 AI 的边界：它能做到什么程度？在哪个领域能做到？并提供 Agent 开发与 AI 教学。\n\n- 官网: ${site}/\n- 联系: praxiswalker@outlook.com · 微信 wrjy2049\n\n## 做了才知道（探索记录）\n\n`+LOGS.map(l=>`### ${l.date} · ${l.title||''}\n`+F.map(([k,n])=>`- ${n}：${l[k]||'待补充'}`).join('\n')+(l.link?`\n- 链接：${l.link}`:'')).join('\n\n')+'\n';
+const llms=`# 未然界域科技工作室\n\n> 带着好奇去做，做了，才知道什么重要。探 AI 的边界：它能做到什么程度？在哪个领域能做到？也做 Agent 开发，帮你用好 AI。\n\n- 官网: ${site}/\n- 联系: praxiswalker@outlook.com · 微信 wrjy2049\n\n## 做了才知道（探索记录）\n\n`+LOGS.map(l=>`### ${l.date} · ${l.title||''}\n`+F.map(([k,n])=>`- ${n}：${l[k]||'待补充'}`).join('\n')+(l.link?`\n- 链接：${l.link}`:'')).join('\n\n')+'\n';
 const today=new Date().toISOString().slice(0,10);
 const files={
  live:{'/robots.txt':`User-agent: *\nAllow: /\nSitemap: ${site}/sitemap.xml\n`,'/sitemap.xml':`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${site}/</loc><lastmod>${today}</lastmod></url></urlset>\n`,'/llms.txt':llms},
