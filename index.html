@@ -96,6 +96,7 @@ blockquote cite{display:block;font-style:normal;font-size:11px;letter-spacing:.3
 #log h2{font-size:clamp(32px,5.4vw,74px)}
 .lg dl{grid-template-columns:6.5em 1fr}
 #service .xp h3{font-size:clamp(22px,2.4vw,32px)}#service h2,#contact h2{font-size:clamp(26px,4vw,54px)}
+.lg a.gl{color:#d09a64;text-decoration:none;border-bottom:1px solid rgba(208,154,100,.5);font-size:12px;letter-spacing:.2em;margin-left:6px;white-space:nowrap}
 footer{position:relative;z-index:2;padding:0 12vw 6vh;font-size:11px;letter-spacing:.35em;color:rgba(236,232,226,.3);display:none}
 footer a{color:inherit;text-decoration:none}
 .seed{width:9px;height:9px;border-radius:50%;background:#e2a46c;box-shadow:0 0 16px 5px rgba(214,148,90,.35);margin-bottom:40px;animation:br 3.6s ease-in-out infinite}
@@ -142,11 +143,12 @@ const CONTACT_WECHAT='wrjy2049';
 // ===== 记录：往数组里追加即可，最新放最前 =====
 const LOGS=[
  {date:'2026.10',title:'用 Jev 给口号打分',curious:'一句话好不好记，能交给 AI 判断吗？',did:'把四句候选口号交给决策模型 Jev，让它选最容易被记住、也最能复述原意的一句。',reach:'几百毫秒给出选择和概率，选中「带着好奇去做，做了，才知道什么重要。」（57%）。',stuck:'它的把握不高（0.43），也不是真人测试。',now:'判断可以先交给 AI，但改变结果的决定还得我来做。'},
- {date:'2026.10',title:'把哥飞蒸馏成 Agent',curious:'学了 AI，怎么用它出海？',did:'把出海前辈哥飞的公开文章蒸馏成一个 Agent，开源到 GitHub，在 X 上发了出来。',reach:'把一位前辈的公开文章蒸馏成能用的 Agent，还替我写推文、回评论。',stuck:'它写的东西我自己判断不了，做到后来不知道自己在做什么；涨了关注，没赚到钱。',now:'动手很快不是难事，难的是停下来问一句：我要的是什么。注意力要先守住，再花出去。'},
+ {date:'2026.10',title:'把哥飞蒸馏成 Agent',curious:'学了 AI，怎么用它出海？',did:'把哥飞的公众号文章和会员群发言蒸馏成 Agent，开源到 GitHub，在 X 上发布。',link:'https://github.com/AdgaiWalker/gefei-agent',reach:'把一位前辈的公开文章蒸馏成能用的 Agent，还替我写推文、回评论。',stuck:'它写的东西我自己判断不了，做到后来不知道自己在做什么；涨了关注，没赚到钱。',now:'动手很快不是难事，难的是停下来问一句：我要的是什么。注意力要先守住，再花出去。'},
+ {date:'更早',title:'从找资源到教 AI',curious:'找资源太难，AI 能不能帮人少走弯路？',did:'做过大创找资源平台，在抖音直播教 AI，建了微信群。',reach:'AI 本身就是最好的老师，问它就能学。',stuck:'群后来沉寂了，当时的尝试没留下记录。',now:'我不用教，我的角色是替人降噪。'},
 ];
 (()=>{const ol=document.getElementById('lg');const e=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const F=[['curious','好奇'],['did','做了'],['reach','AI 做到了'],['stuck','卡在了'],['now','现在觉得']];
-ol.innerHTML=LOGS.map(l=>`<li class="rv"><time>${e(l.date)}</time>${l.title?`<h4>${e(l.title)}</h4>`:''}<dl>${F.map(([k,n])=>`<dt>${n}</dt><dd class="${k==='now'?'now':''}${l[k]?'':' tbd'}">${l[k]?e(l[k]):'待我补充'}</dd>`).join('')}</dl></li>`).join('');})();
+ol.innerHTML=LOGS.map(l=>`<li class="rv"><time>${e(l.date)}</time>${l.title?`<h4>${e(l.title)}</h4>`:''}<dl>${F.map(([k,n])=>`<dt>${n}</dt><dd class="${k==='now'?'now':''}${l[k]?'':' tbd'}">${l[k]?e(l[k]):'待我补充'}${k==='did'&&l.link?` <a class="gl" href="${e(l.link)}" target="_blank" rel="noopener">GitHub →</a>`:''}</dd>`).join('')}</dl></li>`).join('');})();
 
 function weiranAudio(ac,out,S){ // S = start time in ctx seconds; returns master gain
 const sr=ac.sampleRate;
