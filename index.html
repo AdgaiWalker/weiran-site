@@ -99,6 +99,27 @@ blockquote cite{display:block;font-style:normal;font-size:11px;letter-spacing:.3
 #service .xp h3{font-size:clamp(22px,2.4vw,32px)}#service h2,#contact h2{font-size:clamp(26px,4vw,54px)}
 .lg a.gl{color:#d09a64;text-decoration:none;border-bottom:1px solid rgba(208,154,100,.5);font-size:12px;letter-spacing:.2em;margin-left:6px;white-space:nowrap}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#nl{position:fixed;left:58vw;right:5vw;top:44vh;z-index:3;opacity:0;font-weight:300;transition:opacity .6s}
+#nl .nlh{font-family:"Noto Serif Display",serif;font-size:10.5px;letter-spacing:.4em;color:rgba(208,154,100,.8)}
+#nl h4{font-weight:300;font-size:17px;letter-spacing:.16em;margin:10px 0 14px;color:#ece8e2}
+#nl dl{margin:0;display:grid;grid-template-columns:5.6em 1fr;row-gap:7px;max-width:34em}
+#nl dt{font-size:10.5px;letter-spacing:.3em;color:rgba(208,154,100,.7);padding-top:3px}
+#nl dd{margin:0;font-size:12.5px;line-height:1.85;letter-spacing:.08em;color:rgba(236,232,226,.62)}
+#nl dd.stuck{color:#e2b081}#nl dt.stuck{color:#e2a46c}
+#nl dd.now{color:#ece8e2}
+#nl .nla{display:inline-block;margin-top:18px;font-size:11.5px;letter-spacing:.3em;color:rgba(236,232,226,.7);text-decoration:none;border-bottom:1px solid rgba(208,154,100,.5);padding-bottom:4px}
+#nl .nlh,#nl h4,#nl dt,#nl dd,#nl .nla{opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform 1.1s ease}
+#nl.go .nlh,#nl.go h4,#nl.go dt,#nl.go dd,#nl.go .nla{opacity:1;transform:none}
+#nl h4{transition-delay:.2s}
+#nl dt.curious,#nl dd.curious{transition-delay:.6s}#nl dt.did,#nl dd.did{transition-delay:1s}#nl dt.reach,#nl dd.reach{transition-delay:1.4s}#nl dt.stuck,#nl dd.stuck{transition-delay:1.8s}#nl dt.now,#nl dd.now{transition-delay:2.2s}#nl .nla{transition-delay:2.8s}
+#nl.st *{transition:none!important}
+#c3,#sig{transition:opacity .9s ease,margin-top 1.4s ease}body.nlon #c3,body.nlon #sig{margin-top:-17vh}
+#latest{min-height:auto!important;padding-top:12vh!important;padding-bottom:6vh!important}
+.nlm .nlh{font-size:10.5px;letter-spacing:.4em;color:rgba(208,154,100,.8)}.nlm h4{font-weight:300;font-size:18px;letter-spacing:.14em;margin:10px 0 16px}
+.nlm dl{margin:0}.nlm dt{font-size:10.5px;letter-spacing:.3em;color:rgba(208,154,100,.75)}.nlm dd{margin:2px 0 12px;font-size:13.5px;line-height:1.95;letter-spacing:.08em;color:rgba(236,232,226,.66)}
+.nlm dd.stuck{color:#e2b081}.nlm dt.stuck{color:#e2a46c}.nlm dd.now{color:#ece8e2}
+.nlm .nla{display:inline-block;margin-top:6px;font-size:12px;letter-spacing:.3em;color:rgba(236,232,226,.7);text-decoration:none;border-bottom:1px solid rgba(208,154,100,.5);padding-bottom:4px}
+@media(prefers-reduced-motion:reduce){#nl *{transition:none!important}#c3,#sig{transition:none}}
 footer{position:relative;z-index:2;padding:0 12vw 6vh;font-size:11px;letter-spacing:.35em;color:rgba(236,232,226,.3);display:none}
 footer a{color:inherit;text-decoration:none}
 .seed{width:9px;height:9px;border-radius:50%;background:#e2a46c;box-shadow:0 0 16px 5px rgba(214,148,90,.35);margin-bottom:40px;animation:br 3.6s ease-in-out infinite}
@@ -312,6 +333,16 @@ window.__renderWav=async()=>{const sr=44100,oc=new OfflineAudioContext(2,sr*50,s
  w(0,'RIFF');v.setUint32(4,36+n*4,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,2,true);v.setUint32(24,sr,true);v.setUint32(28,sr*4,true);v.setUint16(32,4,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*4,true);
  for(let i=0;i<n;i++){v.setInt16(44+i*4,Math.max(-1,Math.min(1,L[i]))*32767,true);v.setInt16(46+i*4,Math.max(-1,Math.min(1,R[i]))*32767,true);}
  let s='';const u=new Uint8Array(ab);for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s);};
+// 点睛：短片定格后，最新一条记录从地平线升起（桌面）；手机/减少动态见静态版
+let nl=null,nlS=null;function nlBuild(){const l=(typeof LOGS!=='undefined')&&LOGS[0];if(!l)return null;const e=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const F=[['curious','好奇'],['did','做了'],['reach','AI 做到了'],['stuck','卡在了'],['now','现在觉得']];
+  const inner=`<div class="nlh"><time>${e(l.date)}</time> · 最新一次探索</div><h4>${e(l.title||'')}</h4><dl>${F.filter(([k])=>l[k]).map(([k,n])=>`<dt class="${k}">${n}</dt><dd class="${k}">${e(l[k])}</dd>`).join('')}</dl><a class="nla" href="#log">看全部记录 ↓</a>`;
+  const d=document.createElement('div');d.innerHTML=inner;
+  d.querySelector('.nla').onclick=ev=>{ev.preventDefault();const L=document.getElementById('log');if(L)L.scrollIntoView({behavior:RM?'auto':'smooth'});};return d;}
+function nlTick(t,cf){if(MOB){if(!nlS&&siteOn){nlS=document.createElement('section');nlS.id='latest';const d=nlBuild();if(d){d.className='nlm rv on';nlS.appendChild(d);site.prepend(nlS);}}return;}
+  if(!nl){nl=nlBuild();if(!nl)return;nl.id='nl';document.body.appendChild(nl);if(RM||(localStorage.getItem('weiran_film_seen')&&!/[?&]auto/.test(location.search)))nl.classList.add('st');}
+  const on=t>=43.4&&cf>0.02;if(on&&!nl.classList.contains('go')){nl.classList.add('go');document.body.classList.add('nlon');}
+  nl.style.opacity=on?cf:0;nl.style.pointerEvents=on&&cf>.5?'auto':'none';}
 const c1=document.getElementById('c1'),c2=document.getElementById('c2'),c3=document.getElementById('c3'),sig=document.getElementById('sig'),re=document.getElementById('re');
 re.onclick=()=>{if(actx||!q.has('auto'))startAudio();t0=performance.now()+80;seek=0;build();};
 const CAPS=[[.6,6.6,'我们只知道，AI 很强。'],[10.2,13.4,'可它能做到哪？'],[16.6,21.4,'没人说得清。'],[24.7,26.4,'那就，'],[26.5,27.9,'亲手试一试。'],[37.1,39,'能做到哪，'],[39.5,41.3,'做了才知道。']];
@@ -429,6 +460,7 @@ function frame(now){
   let mi='';for(const c of MINI)if(t>=c[0]&&t<c[1])mi=c[2];
   if(mi){c2.textContent=mi;c2.style.left=(vg.cx/DPR)+'px';c2.style.top=((vg.cy+vg.s*.9)/DPR)+'px';}c2.style.opacity=mi?1:0;
   c3.style.opacity=t>=41.8?cf:0;sig.style.opacity=t>=42.8?cf:0;
+  nlTick(t,cf);
   re.style.opacity=0;re.style.pointerEvents='none';
   requestAnimationFrame(frame);
 }
