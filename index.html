@@ -113,7 +113,7 @@ footer a{color:inherit;text-decoration:none}
 <button id="skip">跳 过</button>
 <canvas id="ground" aria-hidden="true"></canvas>
 <div id="hint"></div>
-<header id="nav"><a class="brand" href="#top">未然界域</a><nav><a href="#belief">信念</a><a href="#log">记录</a><a href="#service">服务</a><a href="#founder">创始人</a><a href="#contact">联系</a><button id="rewatch">重看短片</button></nav></header>
+<header id="nav"><a class="brand" href="#top">未然界域</a><nav><a href="#belief">信念</a><a href="#log">记录</a><a href="#service">服务</a><a href="#founder">创始人</a><a href="#contact">联系</a><button id="rewatch">重看短片 · 有声</button></nav></header>
 <main id="site">
 <section id="belief" style="padding-top:30vh"><div class="lab rv">我们相信</div><h2 class="ph"><span class="tx">把时间还给人。</span></h2>
 <p class="body rv">减少无意义的重复劳动，让人有更多时间去发展自己，去做只有人才能做的事。AI 最好的用处，不是替代人，而是把人的时间还回来。</p>
@@ -285,16 +285,24 @@ document.documentElement.classList.add('lock');
 function enableSite(){if(siteOn)return;siteOn=true;try{localStorage.setItem(SEEN,'1');}catch(e){}
   document.documentElement.classList.remove('lock');site.style.display='block';foot.style.display='block';nav.classList.add('on');hint.style.opacity=1;skipB.style.opacity=0;skipB.style.pointerEvents='none';
   re.style.display='none';window.__siteStart&&window.__siteStart();}
-function skipFilm(){if(actx){try{actx.close();}catch(e){}actx=null;}started=true;seek=END+.01;t0=performance.now();gate.style.opacity=0;setTimeout(()=>gate.style.display='none',800);mu.style.opacity=0;}
+function skipFilm(){if(actx){try{actx.close();}catch(e){}actx=null;}if(unl)unl.pause();started=true;seek=END+.01;t0=performance.now();gate.style.opacity=0;setTimeout(()=>gate.style.display='none',800);mu.style.opacity=0;}
 skipB.onclick=e=>{e.stopPropagation();skipFilm();};
 let seen=false;try{seen=!!localStorage.getItem(SEEN);}catch(e){}
 if(seen&&!q.has('auto')&&!q.has('film')){gate.style.display='none';skipFilm();}
 else if(!q.has('auto')){skipB.style.opacity=1;skipB.style.pointerEvents='auto';}
 document.getElementById('rewatch').onclick=()=>{scrollTo(0,0);document.documentElement.classList.add('lock');siteOn=false;site.style.display='none';foot.style.display='none';nav.classList.remove('on');hint.style.opacity=0;
   startAudio();t0=performance.now()+80;seek=0;started=true;build();mu.style.opacity=1;skipB.style.opacity=1;skipB.style.pointerEvents='auto';};
-function startAudio(){try{if(actx)actx.close();actx=new (window.AudioContext||window.webkitAudioContext)();aS=actx.currentTime+.08;mg=weiranAudio(actx,actx.destination,aS);mg.gain.value=muted?0:.8;}catch(e){actx=null;}}
+// iOS：静音键会让 Web Audio 静默。轻触时同步播放一段无声循环 <audio>，把音频会话切到"媒体播放"。
+window.__aud=()=>({ctx:actx&&actx.state,silent:!!unl&&!unl.paused});var unl=null;function unlockMedia(){try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
+  try{if(!unl){const n=4410,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i));};
+    w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,44100,true);v.setUint32(28,88200,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);
+    let bin='';const u=new Uint8Array(b);for(let i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);
+    unl=new Audio('data:audio/wav;base64,'+btoa(bin));unl.loop=true;unl.setAttribute('playsinline','');unl.setAttribute('x-webkit-airplay','deny');unl.preload='auto';}
+    const pr=unl.play();if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(!actx)return;if(document.hidden){actx.suspend&&actx.suspend();}else{actx.resume&&actx.resume();unl&&unl.play().catch(()=>{});}});
+function startAudio(){unlockMedia();try{if(actx)actx.close();actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state!=='running')actx.resume();aS=actx.currentTime+.08;mg=weiranAudio(actx,actx.destination,aS);mg.gain.value=muted?0:.8;}catch(e){actx=null;}}
 gate.onclick=()=>{if(siteOn)return;startAudio();t0=performance.now()+80;started=true;gate.style.opacity=0;setTimeout(()=>gate.style.display='none',1200);mu.style.opacity=1;};
-mu.onclick=()=>{muted=!muted;mu.textContent=muted?'声 · 关':'声 · 开';if(mg)mg.gain.setTargetAtTime(muted?0:.8,actx.currentTime,.05);};
+mu.onclick=e=>{e.stopPropagation();if(actx&&actx.state!=='running')actx.resume();muted=!muted;mu.textContent=muted?'声 · 关':'声 · 开';if(mg)mg.gain.setTargetAtTime(muted?0:.8,actx.currentTime,.05);};
 window.__renderWav=async()=>{const sr=44100,oc=new OfflineAudioContext(2,sr*50,sr);weiranAudio(oc,oc.destination,0);const b=await oc.startRendering();
  const L=b.getChannelData(0),R=b.getChannelData(1),n=L.length,ab=new ArrayBuffer(44+n*4),v=new DataView(ab);const w=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));};
  w(0,'RIFF');v.setUint32(4,36+n*4,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,2,true);v.setUint32(24,sr,true);v.setUint32(28,sr*4,true);v.setUint16(32,4,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*4,true);
