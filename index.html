@@ -72,6 +72,15 @@ blockquote cite{display:block;font-style:normal;font-size:11px;letter-spacing:.3
 .lg dd.now{color:#ece8e2}
 .nw{white-space:nowrap}
 @media(max-width:760px){.lg dl{grid-template-columns:1fr;row-gap:4px}.lg dd{margin-bottom:12px}.lg>li{padding-left:22px}}
+#bfx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+#belief{isolation:isolate}
+.svc{margin-top:64px}.svc h3{margin-top:18px}
+.lg{border:0}.lg>li{border-left:0}
+.lg:after{content:"";position:absolute;left:0;top:10px;bottom:56px;width:1px;background:linear-gradient(rgba(208,154,100,.55),rgba(208,154,100,.12));transform-origin:top;transform:scaleY(0);transition:transform 2.4s ease}
+.lg{position:relative}.lg.grow:after{transform:scaleY(1)}
+.lg>li:before{left:-3px;opacity:.25;box-shadow:none;transition:opacity 1.2s ease .6s,box-shadow 1.2s ease .6s}
+.lg>li.on:before{opacity:1;box-shadow:0 0 12px 3px rgba(214,148,90,.3)}
+@media(prefers-reduced-motion:reduce){.lg:after{transform:none;transition:none}.lg>li:before{transition:none}}
 footer{position:relative;z-index:2;padding:0 12vw 6vh;font-size:11px;letter-spacing:.35em;color:rgba(236,232,226,.3);display:none}
 footer a{color:inherit;text-decoration:none}
 .seed{width:9px;height:9px;border-radius:50%;background:#e2a46c;box-shadow:0 0 16px 5px rgba(214,148,90,.35);margin-bottom:40px;animation:br 3.6s ease-in-out infinite}
@@ -93,13 +102,13 @@ footer a{color:inherit;text-decoration:none}
 <section id="belief" style="padding-top:30vh"><div class="lab rv">我们相信</div><h2 class="ph"><span class="tx">把时间还给人。</span></h2>
 <p class="body rv">减少无意义的重复劳动，让人有更多时间去发展自己，去做只有人才能做的事。AI 最好的用处，不是替代人，而是把人的时间还回来。</p>
 <blockquote class="rv">执行不再是壁垒。<br>想象力是最后的壁垒。<cite>Dora ·《未来在来了》</cite></blockquote></section>
-<section id="log"><div class="lab rv">做了才知道</div><h2 class="ph"><span class="tx">带着好奇去做，<br>做了，才知道什么重要。</span></h2>
+<section id="log"><div class="lab rv">做了才知道</div><h2 class="ph"><span class="tx">带着好奇去做，<br>做了，才知道<span class="nw">什么重要。</span></span></h2>
 <p class="body rv">每做完一件事，留下一圈：好奇什么，做了什么，结果怎样，现在觉得它重不重要。</p>
 <ol class="lg" id="lg"></ol></section>
 <section id="service"><div class="lab rv">我们做什么</div><h2 class="ph"><span class="tx">两件事，做深。</span></h2>
-<div class="svc"><div class="rv"><canvas id="fx1" aria-hidden="true"></canvas><span class="no">01</span><h3>Agent 开发</h3><p class="claim">把重复的流程，交给会自己干活的 AI。</p>
+<div class="svc"><div class="rv"><span class="no">01</span><h3>Agent 开发</h3><p class="claim">把重复的流程，交给会自己干活的 AI。</p>
 <ul><li>让小店老板的客服、文案，自己跑起来。</li><li>每周重复的整理与报表，按时自己完成。</li><li>散落各处的资料，变成随问随答的助手。</li></ul></div>
-<div class="rv"><canvas id="fx2" aria-hidden="true"></canvas><span class="no">02</span><h3>AI 教学</h3><p class="claim">手把手，让普通人用上 AI。</p>
+<div class="rv"><span class="no">02</span><h3>AI 教学</h3><p class="claim">手把手，让普通人用上 AI。</p>
 <ul><li>从没碰过 AI 的人，第一天就做出自己的东西。</li><li>让爸妈也能用 AI，看懂一张体检单。</li><li>帮艺术生和小团队，把想法变成作品。</li></ul></div></div></section>
 <section id="founder"><div class="lab rv">创始人</div><div class="seed rv"></div><h2 class="ph"><span class="tx">王国尚远，<br>但舟已下水。</span></h2>
 <p class="body rv">Dora，艺术生出身。用 AI 解决真实的问题，也用 AI 给自己开出一条路。未然界域，是这条路上的一艘小舟。</p>
@@ -423,35 +432,21 @@ function particleIn(h){const tx=h.querySelector('.tx');const r=h.getBoundingClie
       x.fillStyle=p[5]?`rgba(226,164,108,${.9*u})`:`rgba(236,232,226,${.75*u})`;x.fillRect(X,Y,st*.8,st*.8);}
     if(t>1.5)h.classList.add('done');c.style.opacity=Math.max(0,1-(t-1.6)/1);
     if(t<2.7)requestAnimationFrame(f);else c.remove();})(t0);}
-// service mini animations
-function fx(id,draw){const c=document.getElementById(id),x=c.getContext('2d');let vis=false,t0=0;const d0=()=>{};
-  new IntersectionObserver(e=>{vis=e[0].isIntersecting;if(vis){sz();if(!t0)t0=performance.now();}}).observe(c);
-  function sz(){const d=Math.min(devicePixelRatio||1,1.5);c.width=c.clientWidth*d;c.height=c.clientHeight*d;}sz();addEventListener('resize',sz);
-  (function f(now){if(vis){x.clearRect(0,0,c.width,c.height);draw(x,c.width,c.height,(now-t0)/1000*(RM?.3:1));}requestAnimationFrame(f);})(0);}
-const dot=(x,X,Y,s,c)=>{x.fillStyle=c;x.fillRect(X-s/2,Y-s/2,s,s);};
-// 01 Agent: a messy pile on the left; a copper agent carries each into neat rows on its own, then loops
-const pile=[...Array(24)].map((_,i)=>[Math.random(),Math.random()]);
-fx('fx1',(x,W,H,t)=>{const d=W/ (x.canvas.clientWidth||1),s=2.4*d,cyc=t%14,per=.5,n=24;
-  const done=Math.min(n,Math.floor(cyc/per));const ph=(cyc%per)/per;
-  const L=(i)=>[W*.06+pile[i][0]*W*.26,H*.18+pile[i][1]*H*.64],R=(i)=>[W*.58+(i%8)*W*.05,H*.32+((i/8)|0)*H*.18];
-  const fade=cyc>12.5?1-(cyc-12.5)/1.5:1;
-  // track
-  x.fillStyle='rgba(236,232,226,.08)';for(let k=0;k<60;k++)x.fillRect(W*.36+k*W*.0035,H*.5,d,d);
-  for(let i=0;i<n;i++){let p;if(i<done)p=R(i);else if(i==done&&cyc<n*per){const a=L(i),b=R(i),u=ph*ph*(3-2*ph);p=[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u-Math.sin(u*Math.PI)*H*.12];
-      dot(x,p[0],p[1]-6*d,3.6*d,`rgba(226,164,108,${.95*fade})`);}else p=L(i);
-    dot(x,p[0],p[1],s,`rgba(236,232,226,${(i<done?.85:.38)*fade})`);}
-});
-// 02 Teaching: a bright point reaches a dim one; it warms, then begins making its own small constellation
-fx('fx2',(x,W,H,t)=>{const d=W/(x.canvas.clientWidth||1),cyc=t%9,sm=v=>(v=Math.max(0,Math.min(1,v)),v*v*(3-2*v));
-  const A=[W*.3,H*.5],B=[W*.55,H*.5];const fade=cyc>8?1-(cyc-8):1;
-  const l=sm(cyc/1.4);x.strokeStyle=`rgba(226,164,108,${.35*fade})`;x.lineWidth=d;x.beginPath();x.moveTo(A[0],A[1]);x.lineTo(A[0]+(B[0]-A[0])*l,A[1]);x.stroke();
-  dot(x,A[0],A[1],4*d,`rgba(226,164,108,${.95*fade})`);
-  const w=sm((cyc-1.3)/1.2);dot(x,B[0],B[1],(2.4+1.6*w)*d,`rgba(236,232,226,${(.3+.65*w)*fade})`);
-  const m=sm((cyc-2.6)/3);const k=18;
-  for(let i=0;i<k;i++){const u=sm(m*1.6-i/k*.6);if(u<=0)continue;const a=i*2.399,r=Math.sqrt((i+1)/k)*H*.36;
-    const X=B[0]+Math.cos(a)*r*u*1.3,Y=B[1]+Math.sin(a)*r*u;dot(x,X,Y,2.2*d,`rgba(236,232,226,${.75*u*fade})`);
-    if(i>0&&u>.5){const j=Math.floor(i*.6),aj=j*2.399,rj=Math.sqrt((j+1)/k)*H*.36;x.strokeStyle=`rgba(236,232,226,${.12*fade})`;x.beginPath();x.moveTo(X,Y);x.lineTo(B[0]+Math.cos(aj)*rj*1.3,B[1]+Math.sin(aj)*rj);x.stroke();}}
-});
+// 我们相信：散落的铜色微粒，随滚动聚成一条线
+(()=>{const sec=document.getElementById('belief');const c=document.createElement('canvas');c.id='bfx';c.setAttribute('aria-hidden','true');sec.prepend(c);
+  const x=c.getContext('2d'),N=MOB?70:150,P=[...Array(N)].map((_,i)=>({x:Math.random(),y:Math.random(),u:i/(N-1),ph:Math.random()*6.28,s:.6+Math.random()*.8}));
+  let W,H,d,vis=false;function sz(){d=Math.min(devicePixelRatio||1,MOB?1:1.5);W=c.width=sec.clientWidth*d;H=c.height=sec.clientHeight*d;}sz();addEventListener('resize',sz);
+  new IntersectionObserver(e=>{vis=e[0].isIntersecting;}).observe(sec);
+  let g=0;const sm=v=>(v=Math.max(0,Math.min(1,v)),v*v*(3-2*v));
+  (function f(now){requestAnimationFrame(f);if(!vis)return;const r=sec.getBoundingClientRect();
+    const tgt=RM?1:sm((innerHeight-r.top)/(innerHeight*1.05));g+=(tgt-g)*(RM?1:.06);
+    x.clearRect(0,0,W,H);const t=RM?0:now/1000,ly=H*.2,lx0=W*.12,lx1=W*.88;
+    for(const p of P){const k=sm(g*1.25-p.u*.25);const sx=p.x*W+Math.sin(t*.15+p.ph)*14*d,sy=p.y*H+Math.cos(t*.12+p.ph)*10*d;
+      const X=sx+(lx0+(lx1-lx0)*p.u-sx)*k,Y=sy+(ly-sy)*k;const a=.18+.4*k;
+      x.fillStyle=`rgba(214,154,100,${a})`;const z=p.s*(1.6+.6*k)*d;x.fillRect(X-z/2,Y-z/2,z,z);}})(0);
+})();
+// 记录：航线随条目点亮生长
+(()=>{const ol=document.getElementById('lg');new IntersectionObserver(e=>{if(e[0].isIntersecting)ol.classList.add('grow');},{threshold:.15}).observe(ol);})();
 window.__siteStart=()=>{const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;io.unobserve(el);
     if(el.classList.contains('ph'))particleIn(el);else el.classList.add('on');}),{threshold:.35});
   document.querySelectorAll('.ph,.rv').forEach(el=>io.observe(el));};
