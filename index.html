@@ -62,6 +62,16 @@ blockquote cite{display:block;font-style:normal;font-size:11px;letter-spacing:.3
 .lk{display:inline-block;align-self:flex-start;margin-top:46px;color:rgba(236,232,226,.75);text-decoration:none;font-size:13px;letter-spacing:.3em;border-bottom:1px solid rgba(208,154,100,.5);padding-bottom:6px;transition:color .5s}
 .ct{margin-top:54px;font-size:14px;letter-spacing:.2em;line-height:2.6;color:rgba(236,232,226,.7)}
 .ct span{color:#d09a64;font-size:11px;letter-spacing:.4em;margin-right:22px}
+.lg{list-style:none;padding:0;margin:64px 0 0;max-width:40em}
+.lg>li{position:relative;padding:0 0 56px 30px;border-left:1px solid rgba(208,154,100,.28)}
+.lg>li:before{content:"";position:absolute;left:-4px;top:6px;width:7px;height:7px;border-radius:50%;background:#d09a64;box-shadow:0 0 12px 3px rgba(214,148,90,.3)}
+.lg time{display:block;font-family:"Noto Serif Display",serif;font-size:11px;letter-spacing:.4em;color:#d09a64;margin-bottom:22px}
+.lg dl{margin:0;display:grid;grid-template-columns:5.5em 1fr;row-gap:16px}
+.lg dt{font-size:11px;letter-spacing:.35em;color:rgba(208,154,100,.85);padding-top:4px}
+.lg dd{margin:0;font-size:clamp(13.5px,1.1vw,15px);line-height:2.1;letter-spacing:.1em;color:rgba(236,232,226,.72);font-weight:300}
+.lg dd.now{color:#ece8e2}
+.nw{white-space:nowrap}
+@media(max-width:760px){.lg dl{grid-template-columns:1fr;row-gap:4px}.lg dd{margin-bottom:12px}.lg>li{padding-left:22px}}
 footer{position:relative;z-index:2;padding:0 12vw 6vh;font-size:11px;letter-spacing:.35em;color:rgba(236,232,226,.3);display:none}
 footer a{color:inherit;text-decoration:none}
 .seed{width:9px;height:9px;border-radius:50%;background:#e2a46c;box-shadow:0 0 16px 5px rgba(214,148,90,.35);margin-bottom:40px;animation:br 3.6s ease-in-out infinite}
@@ -78,11 +88,14 @@ footer a{color:inherit;text-decoration:none}
 <button id="skip">跳 过</button>
 <canvas id="ground" aria-hidden="true"></canvas>
 <div id="hint"></div>
-<header id="nav"><a class="brand" href="#top">未然界域</a><nav><a href="#belief">信念</a><a href="#service">服务</a><a href="#founder">创始人</a><a href="#contact">联系</a><button id="rewatch">重看短片</button></nav></header>
+<header id="nav"><a class="brand" href="#top">未然界域</a><nav><a href="#belief">信念</a><a href="#log">记录</a><a href="#service">服务</a><a href="#founder">创始人</a><a href="#contact">联系</a><button id="rewatch">重看短片</button></nav></header>
 <main id="site">
 <section id="belief" style="padding-top:30vh"><div class="lab rv">我们相信</div><h2 class="ph"><span class="tx">把时间还给人。</span></h2>
 <p class="body rv">减少无意义的重复劳动，让人有更多时间去发展自己，去做只有人才能做的事。AI 最好的用处，不是替代人，而是把人的时间还回来。</p>
 <blockquote class="rv">执行不再是壁垒。<br>想象力是最后的壁垒。<cite>Dora ·《未来在来了》</cite></blockquote></section>
+<section id="log"><div class="lab rv">做了才知道</div><h2 class="ph"><span class="tx">带着好奇去做，<br>做了，才知道什么重要。</span></h2>
+<p class="body rv">每做完一件事，留下一圈：好奇什么，做了什么，结果怎样，现在觉得它重不重要。</p>
+<ol class="lg" id="lg"></ol></section>
 <section id="service"><div class="lab rv">我们做什么</div><h2 class="ph"><span class="tx">两件事，做深。</span></h2>
 <div class="svc"><div class="rv"><canvas id="fx1" aria-hidden="true"></canvas><span class="no">01</span><h3>Agent 开发</h3><p class="claim">把重复的流程，交给会自己干活的 AI。</p>
 <ul><li>让小店老板的客服、文案，自己跑起来。</li><li>每周重复的整理与报表，按时自己完成。</li><li>散落各处的资料，变成随问随答的助手。</li></ul></div>
@@ -91,7 +104,7 @@ footer a{color:inherit;text-decoration:none}
 <section id="founder"><div class="lab rv">创始人</div><div class="seed rv"></div><h2 class="ph"><span class="tx">王国尚远，<br>但舟已下水。</span></h2>
 <p class="body rv">Dora，艺术生出身。用 AI 解决真实的问题，也用 AI 给自己开出一条路。未然界域，是这条路上的一艘小舟。</p>
 <a class="lk rv" href="https://www.iwalk.pro" target="_blank" rel="noopener">读我的文章 →</a></section>
-<section id="contact"><div class="lab rv">联系</div><h2 class="ph"><span class="tx">有一件你不想再重复的事？<br>聊聊。</span></h2>
+<section id="contact"><div class="lab rv">联系</div><h2 class="ph"><span class="tx">有一件你<span class="nw">不想再重复的事？</span><br>聊聊。</span></h2>
 <div class="ct rv"><div><span>邮箱</span><a id="em" class="lk" style="margin:0;padding:0;border:0" href="#"></a></div><div><span>微信</span><b id="wx" style="font-weight:300"></b></div></div></section>
 </main>
 <footer>© 2026 未然界域科技工作室 · <a href="https://www.iwalk.pro" target="_blank" rel="noopener">iwalk.pro</a></footer>
@@ -99,6 +112,13 @@ footer a{color:inherit;text-decoration:none}
 /* ===== 联系方式：只需改这里 ===== */
 const CONTACT_EMAIL='praxiswalker@outlook.com';
 const CONTACT_WECHAT='wrjy2049';
+// ===== 记录：往数组里追加即可，最新放最前 =====
+const LOGS=[
+ {date:'2026.10',curious:'学了 AI，怎么用它出海？',did:'把出海前辈哥飞的公开文章蒸馏成一个 Agent，开源到 GitHub，在 X 上发了出来。',result:'涨了一些关注，但没赚到钱；推文和回复是 AI 写的，我自己判断不了，做到后来不知道自己在做什么。',now:'动手很快不是难事，难的是停下来问一句：我要的是什么。注意力要先守住，再花出去。'},
+];
+(()=>{const ol=document.getElementById('lg');const e=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+ol.innerHTML=LOGS.map(l=>`<li class="rv"><time>${e(l.date)}</time><dl><dt>好奇</dt><dd>${e(l.curious)}</dd><dt>做了</dt><dd>${e(l.did)}</dd><dt>结果</dt><dd>${e(l.result)}</dd><dt>现在觉得</dt><dd class="now">${e(l.now)}</dd></dl></li>`).join('');})();
+
 function weiranAudio(ac,out,S){ // S = start time in ctx seconds; returns master gain
 const sr=ac.sampleRate;
 const nb=ac.createBuffer(1,sr*2,sr),nd=nb.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
