@@ -81,6 +81,14 @@ blockquote cite{display:block;font-style:normal;font-size:11px;letter-spacing:.3
 .lg>li:before{left:-3px;opacity:.25;box-shadow:none;transition:opacity 1.2s ease .6s,box-shadow 1.2s ease .6s}
 .lg>li.on:before{opacity:1;box-shadow:0 0 12px 3px rgba(214,148,90,.3)}
 @media(prefers-reduced-motion:reduce){.lg:after{transform:none;transition:none}.lg>li:before{transition:none}}
+.xp{margin-top:64px;max-width:40em;padding-left:22px;border-left:1px solid rgba(208,154,100,.5)}
+.xp h3{font-weight:300;font-size:clamp(26px,3vw,40px);letter-spacing:.2em;margin:14px 0 22px}
+.xp .big{font-size:clamp(16px,1.6vw,21px);line-height:2;letter-spacing:.14em;font-weight:300;margin:0}
+.xp .sub{font-size:13.5px;letter-spacing:.12em;line-height:2.2;color:rgba(236,232,226,.6);margin:22px 0 0}
+.xp .sub a{color:#d09a64;text-decoration:none;border-bottom:1px solid rgba(208,154,100,.5)}
+.from{margin:80px 0 0;font-size:13px;letter-spacing:.3em;color:rgba(236,232,226,.45)}
+#service .svc{margin-top:40px}
+#service .svc h3{font-size:clamp(18px,1.7vw,23px)}
 footer{position:relative;z-index:2;padding:0 12vw 6vh;font-size:11px;letter-spacing:.35em;color:rgba(236,232,226,.3);display:none}
 footer a{color:inherit;text-decoration:none}
 .seed{width:9px;height:9px;border-radius:50%;background:#e2a46c;box-shadow:0 0 16px 5px rgba(214,148,90,.35);margin-bottom:40px;animation:br 3.6s ease-in-out infinite}
@@ -105,10 +113,13 @@ footer a{color:inherit;text-decoration:none}
 <section id="log"><div class="lab rv">做了才知道</div><h2 class="ph"><span class="tx">带着好奇去做，<br>做了，才知道<span class="nw">什么重要。</span></span></h2>
 <p class="body rv">每做完一件事，留下一圈：好奇什么，做了什么，结果怎样，现在觉得它重不重要。</p>
 <ol class="lg" id="lg"></ol></section>
-<section id="service"><div class="lab rv">我们做什么</div><h2 class="ph"><span class="tx">两件事，做深。</span></h2>
-<div class="svc"><div class="rv"><span class="no">01</span><h3>Agent 开发</h3><p class="claim">把重复的流程，交给会自己干活的 AI。</p>
+<section id="service"><div class="lab rv">我们做什么</div><h2 class="ph"><span class="tx">一个起点，两件事。</span></h2>
+<div class="xp rv"><span class="no">起点</span><h3>探索边界</h3><p class="big">带着好奇，去探 AI 的边界——<br>它能做到什么程度？<span class="nw">在哪个领域能做到？</span></p>
+<p class="sub">每一次探索，都记在<a href="#log">「做了才知道」</a>里。</p></div>
+<p class="from rv">从探出来的边界里，长出两件事——</p>
+<div class="svc"><div class="rv"><span class="no">01</span><h3>替你做重复的事</h3><p class="claim">Agent 开发：把重复的流程，交给会自己干活的 AI。</p>
 <ul><li>让小店老板的客服、文案，自己跑起来。</li><li>每周重复的整理与报表，按时自己完成。</li><li>散落各处的资料，变成随问随答的助手。</li></ul></div>
-<div class="rv"><span class="no">02</span><h3>AI 教学</h3><p class="claim">手把手，让普通人用上 AI。</p>
+<div class="rv"><span class="no">02</span><h3>教你用好 AI</h3><p class="claim">AI 教学：给学生和老师，手把手用上 AI。</p>
 <ul><li>从没碰过 AI 的人，第一天就做出自己的东西。</li><li>让爸妈也能用 AI，看懂一张体检单。</li><li>帮艺术生和小团队，把想法变成作品。</li></ul></div></div></section>
 <section id="founder"><div class="lab rv">创始人</div><div class="seed rv"></div><h2 class="ph"><span class="tx">王国尚远，<br>但舟已下水。</span></h2>
 <p class="body rv">Dora，艺术生出身。用 AI 解决真实的问题，也用 AI 给自己开出一条路。未然界域，是这条路上的一艘小舟。</p>
